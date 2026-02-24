@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+
+# AI/Data
+chroma_db/
+*.pdf
+*.jsonl
+models/
+
+# OS
+.DS_Store
