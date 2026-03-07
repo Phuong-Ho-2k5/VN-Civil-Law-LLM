@@ -13,8 +13,8 @@ embedding_model = HuggingFaceEmbeddings(model_name="keepitreal/vietnamese-sbert"
 vector_store = Chroma(persist_directory="./chroma_db", embedding_function=embedding_model)
 
 llm = ChatOpenAI(
-    model="google/gemma-3-27b-it:free",
-    openai_api_base="https://openrouter.ai/api/v1",
+    model="openai/gpt-oss-120b:free",
+    base_url="https://openrouter.ai/api/v1",
     openai_api_key=os.getenv("OPENROUTER_API_KEY"),
     temperature=0.3,
     max_tokens=2000)
