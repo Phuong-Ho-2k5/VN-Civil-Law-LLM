@@ -11,3 +11,6 @@ models/
 
 # OS
 .DS_Store
+
+# API_KEYS
+.env

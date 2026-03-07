@@ -5,3 +5,5 @@ langchain-chroma
 chromadb
 sentence-transformers
 pypdf
+langchain-openai
+python-dotenv
