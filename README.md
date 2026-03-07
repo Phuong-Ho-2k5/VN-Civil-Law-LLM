@@ -29,7 +29,9 @@ Hệ thống hỏi đáp pháp lý sử dụng <b>Retrieval-Augmented Generation
 Hệ thống cho phép người dùng đặt câu hỏi về luật, sau đó:
 
 1️⃣ Truy xuất thông tin liên quan từ văn bản luật
+
 2️⃣ Cung cấp ngữ cảnh cho mô hình ngôn ngữ lớn (LLM)
+
 3️⃣ Sinh câu trả lời có **căn cứ pháp lý**
 
 Công nghệ chính được sử dụng:
@@ -117,9 +119,13 @@ VN-Civil-Law-LLM
 # ✨ Tính năng
 
 ✅ Hỏi đáp **Luật Dân sự Việt Nam**
+
 ✅ Truy xuất văn bản luật bằng **vector search**
+
 ✅ Sinh câu trả lời bằng **LLM**
+
 ✅ Embedding tiếng Việt bằng **Vietnamese SBERT**
+
 ✅ Chatbot chạy trực tiếp trên **CLI**
 
 ---
