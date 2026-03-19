@@ -7,3 +7,6 @@ sentence-transformers
 pypdf
 langchain-openai
 python-dotenv
+fastapi
+uvicorn
+streamlit

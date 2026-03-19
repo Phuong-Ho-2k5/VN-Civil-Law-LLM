@@ -30,12 +30,18 @@ llm = ChatOpenAI(
 
 def get_history_by_id(history_id):
     history_path = os.path.join(HISTORY_DIR, f"{history_id}.json")
+    history = ChatMessageHistory()
+    
     if os.path.exists(history_path):
         with open(history_path, "r", encoding="utf-8") as f:
-            history_data = json.load(f)
-            return ChatMessageHistory(messages_from_dict(history_data))
-    else:
-        return ChatMessageHistory()
+            try:
+                history_data = json.load(f)
+                messages = messages_from_dict(history_data)
+                history.add_messages(messages)
+            except Exception as e:
+                print(f"Lỗi khi load lịch sử: {e}")
+                
+    return history
 
 def save_history(history_id, history):
     file_path = os.path.join(HISTORY_DIR, f"{history_id}.json")
@@ -56,20 +62,26 @@ qa_chain = prompt_template | llm | StrOutputParser()
 
 current_session = input("Nhập ID người dùng (ví dụ: user_01): ") or "default_user"
 
-while True:
-    question = input(f"\n[{current_session}] Hỏi (hoặc 'exit'): ")
-    if question.lower() == 'exit':
-        break
+def get_answer(user_id, question):
+    if question.lower() == "exit":
+        return "Kết thúc trò chuyện."
     
-    history = get_history_by_id(current_session)
+    if not os.path.exists(HISTORY_DIR):
+        os.makedirs(HISTORY_DIR)
+        
+    history = get_history_by_id(user_id)
     relevant_chunks = vector_store.similarity_search(question, k=5)
     context = "\n".join([chunk.page_content for chunk in relevant_chunks])
 
-    answer = qa_chain.invoke({"context": context, "question": question, "history": history})
-    print("Trả lời:")
-    print(answer)
+    answer = qa_chain.invoke({
+        "context": context, 
+        "question": question, 
+        "history": [msg.content for msg in history.messages] 
+    })
 
     history.add_user_message(question)
     history.add_ai_message(answer)
-    save_history(current_session, history)
+    save_history(user_id, history)
+    
+    return answer
 
